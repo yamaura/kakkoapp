@@ -20,6 +20,9 @@ const nextConfig = {
       layers: true,
     };
     config.output.webassemblyModuleFilename = (isServer ? "../" : "") + "static/wasm/[modulehash].wasm";
+
+    // minimize cause transformers.js to load model.onnx instead of decoder_model.onnx
+    config.optimization.minimize = false;
     return config;
   },
   typescript: {
