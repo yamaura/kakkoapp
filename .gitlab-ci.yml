@@ -1,0 +1,30 @@
+stages:
+  - build
+  - deploy
+
+build:
+  image: rust:latest
+  stage: build
+  script:
+    - curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+    - wasm-pack build --target web
+  artifacts:
+    paths:
+      - pkg/
+
+pages:
+  image: node:20.4.0
+  stage: deploy
+  script:
+    - apt-get update
+    - npm install .
+    - npm run build
+  variables:
+    NEXT_PUBLIC_BASE_PATH: /kakkoapp
+  artifacts:
+    paths:
+      - out
+  publish: out
+
+# vim:set sw=2 :
+
