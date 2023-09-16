@@ -3,6 +3,7 @@ import { env, pipeline } from "@xenova/transformers";
 // Skip local model check
 // @ts-ignore
 env.allowLocalModels = false;
+//env.useBrowserCache = false;
 
 // Use the Singleton pattern to enable lazy construction of the pipeline.
 class PipelineSingleton {
@@ -14,7 +15,7 @@ class PipelineSingleton {
     console.log("getInstance");
     if (this.instance === null) {
       console.log("inst!");
-      this.instance = pipeline(this.task, this.model, { progress_callback });
+      this.instance = pipeline(this.task, this.model, { progress_callback, quantized: false });
     }
     return this.instance;
   }
